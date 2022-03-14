@@ -17,7 +17,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="card-title fs-3">Posts Lists</div>
+                                <div class="card-title fs-3">Post's Lists</div>
                             </div>
                             <div class="col-md-6 mt-2">
                                 <a href="post-create.php" class="btn btn-dark float-end">+ Add New</a>

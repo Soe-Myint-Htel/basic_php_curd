@@ -10,6 +10,20 @@
 </head>
 
 <body>
+    <?php
+
+    include './connect.php';
+
+    if (isset($_POST['create_post_button'])) {
+        $title = $_POST['title'];
+        $desc = $_POST['description'];
+
+        $query = "INSERT INTO posts(title,description) VALUES ('$title', '$desc')";
+        mysqli_query($db, $query);
+
+    }
+
+    ?>
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-2">
@@ -17,7 +31,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="card-title fs-3">Posts Lists</div>
+                                <div class="card-title fs-3">Create Posts Form</div>
                             </div>
                             <div class="col-md-6 mt-2">
                                 <a href="index.php" class="btn btn-dark float-end">
@@ -26,20 +40,21 @@
                         </div>
                     </div>
                     <div class="card-body">
-                    <form action="">
-                        <div class="mb-3">
-                            <label for="">Title</label>
-                            <input type="text" name="" class="form-control" placeholder="Enter post title">
-                        </div>
-                        <div class="mb-3">
-                            <label for="">Description</label>
-                            <textarea name="" cols="30" rows="5" class="form-control"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <input type="submit" class="btn btn-dark float-end"></input>
-                </div>
+                        <form action="post-create.php" method="POST">
+                            <div class="mb-3">
+                                <label for="">Title</label>
+                                <input type="text" name="title" class="form-control" placeholder="Enter post title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="">Description</label>
+                                <textarea name="description" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <input type="submit" class="btn btn-dark float-end" name="create_post_button"></input>
+                            </div>
+                        </form>
+                    </div>
+
 
                 </div>
             </div>
