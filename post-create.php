@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,6 +30,7 @@
         if(!empty($title) && !empty($desc)){
             $query = "INSERT INTO posts(title,description) VALUES ('$title', '$desc')";
             mysqli_query($db, $query);
+            $_SESSION['successMsg'] = 'A post created successfully';
             header('location:index.php');
         }
     }
