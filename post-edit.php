@@ -16,13 +16,40 @@
     if (isset($_GET['postID'])) {
         $post_id_to_update = $_GET['postID'];
         $post = mysqli_query($db, "SELECT * FROM posts WHERE id=$post_id_to_update");
-        if (mysqli_num_rows($post)) {
+        if (mysqli_num_rows($post) == 1) {
             foreach ($post as $item) {
                 $title = $item['title'];
+                $titleID = $item['id'];
                 $desc = $item['description'];
             }
         }
     }
+
+    $titleError = '';
+    $descError = '';
+    if (isset($_POST['update_post_button'])) {
+        $postID = $_POST['post_id'];
+        $title = $_POST['title'];
+        $desc = $_POST['description'];
+
+        if (empty($title)) {
+            $titleError = 'This title field is required';
+        }
+        if (empty($desc)) {
+            $descError = 'This description field is required';
+        }
+
+        if (!empty($title) && !empty($desc)) {
+            $query = "UPDATE posts SET title='$title', description='$desc' WHERE id=$postID";
+            mysqli_query($db, $query);
+            $_SESSION['successMsg'] = 'A post updated successfully';
+            header('location:index.php');
+        }
+    }
+
+
+
+
     ?>
     <div class="container">
         <div class="row">
@@ -40,7 +67,8 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="post-create.php" method="POST">
+                        <form action="post-edit.php" method="POST">
+                            <input type="text" name="post_id" value="<?php if (!empty($titleID)) : ?> <?= $titleID ?><?php endif ?>">
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label for="">Title</label>
@@ -56,7 +84,7 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <input type="submit" class="btn btn-dark float-end" name="create_post_button" value="Update"></input>
+                                <input type="submit" class="btn btn-dark float-end" name="update_post_button" value="Update"></input>
                             </div>
                         </form>
                     </div>
