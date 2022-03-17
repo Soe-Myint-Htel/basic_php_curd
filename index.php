@@ -35,15 +35,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>HTML</td>
-                                    <td>kjoikjoiarjhfkja;fijrfjo;ij</td>
+                                <?php
+                                    include './connect.php';
+                                    $query = 'SELECT * FROM posts';
+                                    $posts = mysqli_query($db, $query);
+                                    
+                                    foreach($posts as $post){
+                                ?>
+                                    <tr>
+                                    <td><?= $post['id']?></td>
+                                    <td><?= $post['title']?></td>
+                                    <td><?= $post['description']?></td>
                                     <td>
                                         <a href="">Edit</a> |
                                         <a href="">Delete</a>
                                     </td>
-                                </tr>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                                
                             </tbody>
                         </table>
 
