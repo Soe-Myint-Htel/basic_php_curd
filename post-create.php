@@ -13,14 +13,24 @@
     <?php
 
     include './connect.php';
+    $titleError = '';
+    $descError = '';
 
     if (isset($_POST['create_post_button'])) {
         $title = $_POST['title'];
         $desc = $_POST['description'];
 
-        $query = "INSERT INTO posts(title,description) VALUES ('$title', '$desc')";
-        mysqli_query($db, $query);
-
+        if(empty($title)){
+            $titleError = 'This title field is required';
+        }
+        if(empty($desc)){
+            $descError = 'This description field is required';
+        }
+        if(!empty($title) && !empty($desc)){
+            $query = "INSERT INTO posts(title,description) VALUES ('$title', '$desc')";
+            mysqli_query($db, $query);
+            header('location:index.php');
+        }
     }
 
     ?>
@@ -41,16 +51,22 @@
                     </div>
                     <div class="card-body">
                         <form action="post-create.php" method="POST">
-                            <div class="mb-3">
-                                <label for="">Title</label>
-                                <input type="text" name="title" class="form-control" placeholder="Enter post title">
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label for="">Title</label>
+                                    <input type="text" name="title" class="form-control <?php if($titleError != ''): ?> is-invalid<?php endif ?>" placeholder="Enter post title" value="<?php if(!empty($title)): ?> <?= $title?><?php endif ?>">
+                                    <span class="text-danger"> <?= $titleError?> </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label for="">Description</label>
+                                    <textarea name="description" cols="30" rows="5" class="form-control <?php if($descError != ''): ?> is-invalid<?php endif ?>" placeholder="Enter description..."><?php if(!empty($desc)): ?> <?= $desc?><?php endif ?></textarea>
+                                    <span class="text-danger"> <?= $descError?> </span>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label for="">Description</label>
-                                <textarea name="description" cols="30" rows="5" class="form-control"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <input type="submit" class="btn btn-dark float-end" name="create_post_button"></input>
+                                <input type="submit" class="btn btn-dark float-end" name="create_post_button" value="Create"></input>
                             </div>
                         </form>
                     </div>
