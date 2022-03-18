@@ -60,7 +60,7 @@
                                         <td><?= $post['description'] ?></td>
                                         <td>
                                             <a href="post-edit.php?postID=<?php echo $post['id']?>">Edit</a> |
-                                            <a href="">Delete</a>
+                                            <a href="index.php?post_id_to_delete=<?php echo $post['id']?>" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
                                         </td>
                                     </tr>
                                 <?php
@@ -75,6 +75,14 @@
             </div>
         </div>
     </div>
+    <?php
+        if(isset($_GET['post_id_to_delete'])){
+            $post_id_to_delete = $_GET['post_id_to_delete'];
+            mysqli_query($db,"DELETE FROM posts WHERE id=$post_id_to_delete");
+            $_SESSION['successMsg'] = "A post deleted successfully";
+            return './index.php';
+        }
+    ?>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 

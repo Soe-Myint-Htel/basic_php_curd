@@ -68,7 +68,7 @@
                     </div>
                     <div class="card-body">
                         <form action="post-edit.php" method="POST">
-                            <input type="text" name="post_id" value="<?php if (!empty($titleID)) : ?> <?= $titleID ?><?php endif ?>">
+                            <input type="hidden" name="post_id" value="<?php if (!empty($titleID)) : ?> <?= $titleID ?><?php endif ?>">
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label for="">Title</label>
